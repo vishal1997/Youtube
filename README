@@ -1,0 +1,12 @@
+Install 
+	1. nodejs
+	2. npm
+	3. Angular cli
+
+Install dependencies
+	Goto to project directive, run: npm install
+
+Development server.
+	Run ng serve for a dev server. Navigate to http://localhost:4200/. 
+	The app will automatically reload if you change any of the source files.
+
