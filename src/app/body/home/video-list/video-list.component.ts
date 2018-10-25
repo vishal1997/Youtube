@@ -34,10 +34,6 @@ export class VideoListComponent implements OnInit {
 
   searchMore() {
     this.homeComponent.searchMore();
-    if(this.sortDate) {
-      let element: HTMLElement = document.getElementById('sortByDate') as HTMLElement;
-      element.click();
-    }
   }
 
   ngOnInit() {

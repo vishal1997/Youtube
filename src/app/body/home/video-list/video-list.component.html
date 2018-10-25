@@ -1,14 +1,70 @@
 
   <mat-radio-group >
-    <mat-radio-button id = "sortByDate" value="1" (click)=sortByDate()>Sort by date</mat-radio-button> &nbsp; &nbsp;
-    <mat-radio-button id = "sortByName" value="2" (click)=sortByName()>Sort by title</mat-radio-button>
+    <mat-radio-button id = "sortByDate" value="1" (click)=sortByDate()>
+      Sort by date
+    </mat-radio-button> 
+    &nbsp; &nbsp;
+    <mat-radio-button id = "sortByName" value="2" (click)=sortByName()>
+      Sort by title
+    </mat-radio-button>
 </mat-radio-group>
 
 <div *ngIf= '!filter'>
-<div  *ngFor = "let video of videoList">
-  <mat-card class="example-card"  >
+  <div  *ngFor = "let video of videoList">
+    <mat-card class="example-card"  >
       <mat-card-header>
-          <mat-card-title>{{video.snippet?.title | videoName: [65, 62]}}</mat-card-title>
+        <mat-card-title>
+          {{video.snippet?.title | videoName: [65, 62]}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          {{video.snippet?.channelTitle}}
+          |
+          Date: {{video.snippet.publishedAt | date}}
+          |
+          Duration: {{ video.contentDetails?.duration | videoDuration }}
+          <br>
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <div class="thumbnail" 
+        [ngStyle]="{'background': '#000 url(' + video.snippet?.thumbnails.high.url + ') center center no-repeat', 'background-size': '100%'}">
+      </div>
+
+      <mat-card-content>
+        <p >
+            {{ video.snippet?.description  | videoName: [65, 62]}}
+        </p>
+      </mat-card-content>
+        <mat-card-actions>
+          <div class="fa fa-thumbs-up">
+            <button mat-button disabled >	
+              {{ video.statistics?.likeCount | videoLikesViews }}
+            </button>
+          </div>
+          <div class="fa fa-thumbs-down">
+            <button mat-button disabled >	
+              {{ video.statistics?.dislikeCount | videoLikesViews }}
+            </button>
+          </div>
+          <div class="glyphicon glyphicon-eye-open" >
+            <button mat-button disabled>
+              {{ video.statistics?.viewCount | videoLikesViews }}
+            </button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+      <br>
+      <br>
+    </div>
+  </div>
+
+
+
+<div *ngIf= 'filter'>
+  <div  *ngFor = "let video of videoList | sort: sortBy ">
+    <mat-card class="example-card"  >
+      <mat-card-header>
+        <mat-card-title>{{video.snippet?.title | videoName: [65, 62]}}</mat-card-title>
           <mat-card-subtitle>
             {{video.snippet?.channelTitle}}
             |
@@ -16,85 +72,40 @@
             |
             Duration: {{ video.contentDetails?.duration | videoDuration }}
             <br>
-            
           </mat-card-subtitle>
-
-      </mat-card-header>
-      <div class="thumbnail" [ngStyle]="{'background': '#000 url(' + video.snippet?.thumbnails.high.url + ') center center no-repeat', 'background-size': '100%'}">
-      </div>
-
-     <mat-card-content>
+        </mat-card-header>
+        <div class="thumbnail" 
+          [ngStyle]="{'background': '#000 url(' + video.snippet?.thumbnails.high.url + ') center center no-repeat', 'background-size': '100%'}">
+        </div>
+        <mat-card-content>
           <p >
               {{ video.snippet?.description  | videoName: [65, 62]}}
           </p>
-      </mat-card-content>
-
+        </mat-card-content>
         <mat-card-actions>
           <div class="fa fa-thumbs-up">
-            <button mat-button disabled >	{{ video.statistics?.likeCount | videoLikesViews }}</button>
+            <button mat-button disabled >	
+              {{ video.statistics?.likeCount | videoLikesViews }}
+            </button>
           </div>
-
           <div class="fa fa-thumbs-down">
-              <button mat-button disabled >	{{ video.statistics?.dislikeCount | videoLikesViews }}</button>
+            <button mat-button disabled >	
+              {{ video.statistics?.dislikeCount | videoLikesViews }}
+            </button>
           </div>
-            <div class="glyphicon glyphicon-eye-open" >
-                
-            <button mat-button disabled>{{ video.statistics?.viewCount | videoLikesViews }}</button>
-            </div>
-          </mat-card-actions>
-  </mat-card>
-<br>
-<br>
-</div>
-</div>
-
-
-
-<div *ngIf= 'filter'>
-  <div  *ngFor = "let video of videoList | sort: sortBy ">
-    <mat-card class="example-card"  >
-        <mat-card-header>
-            <mat-card-title>{{video.snippet?.title | videoName: [65, 62]}}</mat-card-title>
-            <mat-card-subtitle>
-              {{video.snippet?.channelTitle}}
-              |
-              Date: {{video.snippet.publishedAt | date}}
-              |
-              Duration: {{ video.contentDetails?.duration | videoDuration }}
-              <br>
-              
-            </mat-card-subtitle>
-  
-        </mat-card-header>
-        <div class="thumbnail" [ngStyle]="{'background': '#000 url(' + video.snippet?.thumbnails.high.url + ') center center no-repeat', 'background-size': '100%'}">
-        </div>
-  
-       <mat-card-content>
-            <p >
-                {{ video.snippet?.description  | videoName: [65, 62]}}
-            </p>
-        </mat-card-content>
-  
-          <mat-card-actions>
-            <div class="fa fa-thumbs-up">
-              <button mat-button disabled >	{{ video.statistics?.likeCount | videoLikesViews }}</button>
-            </div>
-  
-            <div class="fa fa-thumbs-down">
-                <button mat-button disabled >	{{ video.statistics?.dislikeCount | videoLikesViews }}</button>
-            </div>
-              <div class="glyphicon glyphicon-eye-open" >
-                  
-              <button mat-button disabled>{{ video.statistics?.viewCount | videoLikesViews }}</button>
-              </div>
-            </mat-card-actions>
-    </mat-card>
-  <br>
-  <br>
-  </div>
+          <div class="glyphicon glyphicon-eye-open" >   
+            <button mat-button disabled>
+              {{ video.statistics?.viewCount | videoLikesViews }}
+            </button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+      <br>
+      <br>
+    </div>
   </div>
 
 <div style="text-align:center;">
   <button  mat-button  (click)="searchMore()" > Load More</button>
-  </div>
+</div>
   
