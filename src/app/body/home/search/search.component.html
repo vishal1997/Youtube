@@ -1,0 +1,12 @@
+<form class="form-input" #form="ngForm" [formGroup] = "searchForm"  (ngSubmit)="search($event);">
+  <div fxLayout="row">
+    <div fxFlex="100">
+      <mat-form-field style="width: 100%">
+        <input matTextareaAutosize 
+        matInput placeholder="Search"  formControlName="query" type="text" id="query" autocomplete="off">
+      </mat-form-field>
+    </div>
+  </div>
+</form>  
+
+

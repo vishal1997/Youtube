@@ -1,0 +1,7 @@
+<nav class="mdl-navigation">
+  <app-search (videosUpdated)="handleSearchVideo($event)" [loadingInProgress]="loadingInProgress">
+  </app-search>
+</nav>
+
+<app-video-list *ngIf="videoList.length" [videoList]="videoList" [loadingInProgress]="loadingInProgress">
+</app-video-list>
