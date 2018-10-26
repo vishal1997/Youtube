@@ -1,5 +1,4 @@
-
-  <mat-radio-group >
+ <mat-radio-group  >
     <mat-radio-button id = "sortByDate" value="1" (click)=sortByDate()>
       Sort by date
     </mat-radio-button> 
@@ -9,9 +8,9 @@
     </mat-radio-button>
 </mat-radio-group>
 
-<div *ngIf= '!filter'>
+<div *ngIf= '!filter' >
   <div  *ngFor = "let video of videoList">
-    <mat-card class="example-card"  >
+    <mat-card class="card"  >
       <mat-card-header>
         <mat-card-title>
           {{video.snippet?.title | videoName: [65, 62]}}
@@ -62,7 +61,7 @@
 
 <div *ngIf= 'filter'>
   <div  *ngFor = "let video of videoList | sort: sortBy ">
-    <mat-card class="example-card"  >
+    <mat-card class="card"  >
       <mat-card-header>
         <mat-card-title>{{video.snippet?.title | videoName: [65, 62]}}</mat-card-title>
           <mat-card-subtitle>
@@ -106,6 +105,5 @@
   </div>
 
 <div style="text-align:center;">
-  <button  mat-button  (click)="searchMore()" > Load More</button>
+  <button  mat-button  (click)="loadMore()" > Load More</button>
 </div>
-  

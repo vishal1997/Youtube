@@ -1,6 +1,6 @@
-<form class="form-input" #form="ngForm" [formGroup] = "searchForm"  (ngSubmit)="search($event);">
+<form  #form="ngForm" [formGroup] = "searchForm"  (ngSubmit)="search($event);">
   <div fxLayout="row">
-    <div fxFlex="100">
+    <div fxFlex="90">
       <mat-form-field style="width: 100%">
         <input 
           matTextareaAutosize 
@@ -11,7 +11,8 @@
           autocomplete="off">
       </mat-form-field>
     </div>
+    <div class = "searchbutton"fxFlex="10">
+      <button mat-icon-button  color= primary [disabled] = "searchForm.value.query.length==0" >Search</button>
+    </div>
   </div>
 </form>  
-
-

@@ -4,6 +4,9 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'videoName'
 })
 
+/**
+ * This pipe class is used to reduce the text data.
+ */
 export class VideoNamePipe implements PipeTransform {
   transform(value: any, args: any[]): any {
     const dots = '...';

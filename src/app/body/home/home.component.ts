@@ -13,13 +13,7 @@ import { SearchComponent } from '../home/search/search.component';
 export class HomeComponent implements OnInit {
 
   public videoList = [];
-  public videoPlaylist = [];
-  public loadingInProgress = false;
-  public playlistToggle = false;
-  public playlistNames = false;
-  public repeat = false;
-  public shuffle = false;
-  public playlistElement: any;
+  public loadingVideos = false;
   private pageLoadingFinished = false;
 
   constructor(
@@ -39,15 +33,24 @@ export class HomeComponent implements OnInit {
     this.videoList = videos;
   }
 
-  searchMore(): void {
-    if (this.loadingInProgress || this.pageLoadingFinished || this.videoList.length < 1) {
+  /**
+   * searchMore:  1. This method is called when 'Load More button is clicked'.
+   *              2. If current videoList is empty or if the loading is still in process
+   *                  then it return without calling the youtubeApiService,
+   *              3.  If above condtion is false then it calls for 'searchNext()' method in
+   *                  youtubeApiService to load more 25 results.
+   *              4.  Load timeout is et to 10000 sec.
+   *              5.  If loading is successfull then the result is added to the videoList.
+   */
+  loadMore(): void {
+    if (this.loadingVideos || this.pageLoadingFinished || this.videoList.length < 1) {
       return;
     }
 
-    this.loadingInProgress = true;
-    this.youtubeService.searchNext()
+    this.loadingVideos = true;
+    this.youtubeService.loadNext()
       .then(data => {
-        this.loadingInProgress = false;
+        this.loadingVideos = false;
         if (data.length < 1 || data.status === 400) {
           setTimeout(() => {
             this.pageLoadingFinished = true;
@@ -61,7 +64,7 @@ export class HomeComponent implements OnInit {
           this.videoList.push(val);
         });
       }).catch(error => {
-        this.loadingInProgress = false;
+        this.loadingVideos = false;
       })
   }
 }

@@ -11,6 +11,13 @@ import { VideosSortPipe } from '../../../utils/sort';
 })
 export class SearchComponent implements OnInit {
 
+  /**
+   * 
+   * @param youtubeApiService 
+   * @param formBuilder 
+   * 
+   * By default empty query is sent to the youtube api, and the result is updated by 25 videos.
+   */
   constructor(
     private youtubeApiService : YoutubeApiService,
     private formBuilder : FormBuilder,
@@ -23,10 +30,9 @@ export class SearchComponent implements OnInit {
   }
 
   @Output() videosUpdated = new EventEmitter();
-  @Input() loadingInProgress;
-  videoList:any;
+  @Input() loadingVideos;
 
-  private last_search: string;
+  private searchVideos: string;
 
   public searchForm = this.formBuilder.group({
     query: ['', Validators.required]
@@ -34,25 +40,34 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
   }
-
+/**
+ * 
+ * @param event 
+ * 
+ * search:  1. This method accept argument '$event' from the form.
+ *          2. If the length of the query is zero or the query is same as the previous 
+ *              query it returns without calling the youtubeApiService.
+ *          3. If the above condition is false then it calls for searchVideos method
+ *              in youtubeApiService with parameter 'searchVideos'.
+ *          4. If data is not found then it give a alert message "No data found".
+ */
   search(event): void {
-    if (this.loadingInProgress ||
+
+    if (this.loadingVideos ||
       (this.searchForm.value.query.trim().length === 0) ||
-      (this.last_search && this.last_search === this.searchForm.value.query)) {
+      (this.searchVideos && this.searchVideos === this.searchForm.value.query)) {
       return;
     }
 
     this.videosUpdated.emit([]);
-    this.last_search = this.searchForm.value.query;
+    this.searchVideos = this.searchForm.value.query;
 
-    this.youtubeApiService.searchVideos(this.last_search)
+    this.youtubeApiService.searchVideos(this.searchVideos)
       .then(data => {
         if (data.length < 1) {
-          console.log("No Data found");
+          window.alert("No Data found");
         }
         this.videosUpdated.emit(data);
-        console.log(data);
-        this.videoList = data;
       })
   }
 }

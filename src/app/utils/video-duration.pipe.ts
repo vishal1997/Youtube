@@ -4,6 +4,11 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'videoDuration'
 })
 
+/**
+ * This pipe class is used to display the videos duration in the time format.
+ * If the value is null then '...' is returned.
+ * 
+ */
 export class VideoDurationPipe implements PipeTransform {
   transform(value: any, args?: any[]): any {
     const time = <string>value;
